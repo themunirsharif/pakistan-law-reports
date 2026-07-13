@@ -1,0 +1,32 @@
+name: Daily Judgment Update
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  update-judgments:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the site's code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Fetch new judgments
+        run: python scripts/fetch_judgments.py
+
+      - name: Commit and push new pages (if any)
+        run: |
+          git config user.name "Pakistan Law Reports Bot"
+          git config user.email "actions@github.com"
+          git add judgment/*.html scripts/seen_cases.json
+          git diff --quiet --cached || git commit -m "Daily update: new judgments $(date +'%Y-%m-%d')"
+          git push
