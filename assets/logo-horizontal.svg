@@ -1,0 +1,28 @@
+<svg width="320" height="64" viewBox="0 0 320 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitleH">
+  <title id="logoTitleH">Pakistan Law Reports — horizontal logo</title>
+  <defs>
+    <style>
+      .gold{ fill:#C9A227; }
+      .goldline{ stroke:#C9A227; }
+      .ink{ fill:#F4F1E8; }
+    </style>
+  </defs>
+
+  <!-- scales icon, scaled down -->
+  <g transform="translate(4,4) scale(0.22)">
+    <rect x="117" y="70" width="6" height="86" class="gold"/>
+    <rect x="62" y="70" width="116" height="5" class="gold"/>
+    <line x1="70" y1="72" x2="52" y2="108" class="goldline" stroke-width="6"/>
+    <line x1="70" y1="72" x2="88" y2="108" class="goldline" stroke-width="6"/>
+    <path d="M 48 108 A 24 12 0 0 0 92 108 Z" fill="none" class="goldline" stroke-width="8"/>
+    <line x1="170" y1="72" x2="152" y2="108" class="goldline" stroke-width="6"/>
+    <line x1="170" y1="72" x2="188" y2="108" class="goldline" stroke-width="6"/>
+    <path d="M 148 108 A 24 12 0 0 0 192 108 Z" fill="none" class="goldline" stroke-width="8"/>
+    <path d="M 96 156 L 144 156 L 152 170 L 88 170 Z" class="gold"/>
+    <rect x="82" y="170" width="76" height="7" rx="2" class="gold"/>
+    <circle cx="120" cy="66" r="6" class="gold"/>
+  </g>
+
+  <text x="58" y="30" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="21" font-weight="700" fill="#F4F1E8">Pakistan Law Reports</text>
+  <text x="58" y="48" font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="1.5" fill="#C9A227">CASE LAW · EVERY COURT · EVERY PROVINCE</text>
+</svg>

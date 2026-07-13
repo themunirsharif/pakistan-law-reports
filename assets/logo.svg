@@ -1,0 +1,41 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle">
+  <title id="logoTitle">Pakistan Law Reports logo — scales of justice mark</title>
+  <defs>
+    <style>
+      .navy{ fill:#0B1D33; }
+      .gold{ fill:#C9A227; }
+      .goldline{ stroke:#C9A227; }
+    </style>
+  </defs>
+
+  <circle cx="120" cy="120" r="118" class="navy" />
+  <circle cx="120" cy="120" r="112" fill="none" class="goldline" stroke-width="2"/>
+
+  <!-- central column -->
+  <rect x="117" y="70" width="6" height="86" class="gold"/>
+
+  <!-- crossbar -->
+  <rect x="62" y="70" width="116" height="5" class="gold"/>
+
+  <!-- left pan chains -->
+  <line x1="70" y1="72" x2="52" y2="108" class="goldline" stroke-width="2"/>
+  <line x1="70" y1="72" x2="88" y2="108" class="goldline" stroke-width="2"/>
+  <!-- left pan -->
+  <path d="M 48 108 A 24 12 0 0 0 92 108 Z" fill="none" class="goldline" stroke-width="3"/>
+
+  <!-- right pan chains -->
+  <line x1="170" y1="72" x2="152" y2="108" class="goldline" stroke-width="2"/>
+  <line x1="170" y1="72" x2="188" y2="108" class="goldline" stroke-width="2"/>
+  <!-- right pan -->
+  <path d="M 148 108 A 24 12 0 0 0 192 108 Z" fill="none" class="goldline" stroke-width="3"/>
+
+  <!-- base -->
+  <path d="M 96 156 L 144 156 L 152 170 L 88 170 Z" class="gold"/>
+  <rect x="82" y="170" width="76" height="7" rx="2" class="gold"/>
+
+  <!-- top finial -->
+  <circle cx="120" cy="66" r="6" class="gold"/>
+
+  <!-- wordmark -->
+  <text x="120" y="212" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" fill="#F4F1E8" letter-spacing="1">PLR</text>
+</svg>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- SEO: every {{PLACEHOLDER}} below gets filled in per-judgment by the update script -->
+<title>{{CASE_TITLE}} | {{CITATION}} | {{COURT_NAME}} | Pakistan Law Reports</title>
+<meta name="description" content="{{CASE_TITLE}} — {{COURT_NAME}}, {{CITY}}. {{ONE_LINE_SUMMARY}} Read the full judgment {{CITATION}}.">
+<link rel="canonical" href="https://pakistanlawreports.com/judgment/{{SLUG}}/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0D0F; --surface:#14171A; --surface-2:#1B1F23; --line:rgba(255,255,255,0.08);
+    --text:#F2F1EC; --text-dim:#9AA0A6; --text-faint:#5C6167;
+    --accent:#C9A227; --accent-dim:#2B2210; --amber:#8C2F2F; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Space Grotesk',sans-serif; letter-spacing:-0.02em; }
+  .mono{ font-family:'JetBrains Mono',monospace; }
+  a{ color:inherit; text-decoration:none; }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .wrap{ max-width:820px; margin:0 auto; padding:0 24px; }
+
+  header{ position:sticky; top:0; z-index:50; background:rgba(11,13,15,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  nav{ max-width:1200px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .logo{ font-size:18px; font-weight:700; display:flex; align-items:center; gap:8px; }
+  .logo .dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); }
+  .back-link{ font-size:13px; color:var(--text-dim); }
+  .back-link:hover{ color:var(--accent); }
+
+  /* Breadcrumb = your URL structure, visible */
+  .breadcrumb{ font-size:12.5px; color:var(--text-faint); padding:24px 0 0; }
+  .breadcrumb a:hover{ color:var(--accent); }
+  .breadcrumb span{ margin:0 6px; }
+
+  .case-head{ padding:16px 0 32px; border-bottom:1px solid var(--line); }
+  .citation-badge{
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);
+    background:var(--accent-dim); border:1px solid rgba(201,162,39,0.25); padding:6px 12px; border-radius:8px; margin-bottom:16px;
+  }
+  h1.case-title{ font-size:clamp(22px,3.2vw,32px); font-weight:600; line-height:1.3; margin-bottom:16px; }
+  .meta-row{ display:flex; flex-wrap:wrap; gap:20px; font-size:13.5px; color:var(--text-dim); }
+  .meta-item b{ display:block; color:var(--text-faint); font-size:11px; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:3px; font-weight:500; }
+  .cat-tag{ display:inline-block; margin-top:16px; font-size:12px; background:var(--surface); border:1px solid var(--line); padding:5px 12px; border-radius:999px; color:var(--text-dim); }
+
+  /* AD SLOTS - placed for readability, not intrusion */
+  .ad-slot{ margin:32px 0; padding:16px; border:1px dashed var(--line); border-radius:10px; text-align:center; }
+  .ad-label{ font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:8px; }
+
+  .headnote{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:24px; margin:28px 0; }
+  .headnote h2{ font-size:14px; color:var(--accent); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.04em; }
+  .headnote p{ color:var(--text-dim); font-size:14.5px; }
+
+  .judgment-body{ padding:32px 0; font-size:15.5px; color:var(--text); }
+  .judgment-body h2{ font-size:19px; margin:32px 0 12px; }
+  .judgment-body p{ margin-bottom:16px; color:#D8D6CF; }
+  .judgment-body .party{ font-style:italic; color:var(--text-dim); }
+
+  .related{ padding:32px 0; border-top:1px solid var(--line); }
+  .related h3{ font-size:16px; margin-bottom:16px; }
+  .related-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; }
+  .rcard{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px; font-size:13px; }
+  .rcard .citation{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); display:block; margin-bottom:8px; }
+  .rcard:hover{ border-color:rgba(201,162,39,0.3); }
+
+  footer{ border-top:1px solid var(--line); padding:32px 0 48px; margin-top:20px; }
+  .foot-note{ font-size:12px; color:var(--text-faint); }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo"><img src="/assets/logo-horizontal.svg" alt="Pakistan Law Reports" style="height:28px; width:auto;" /></div>
+    <a href="/" class="back-link">← All judgments</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="breadcrumb">
+    <a href="/{{PROVINCE_SLUG}}/">{{PROVINCE}}</a><span>/</span>
+    <a href="/{{PROVINCE_SLUG}}/{{CITY_SLUG}}/">{{CITY}}</a><span>/</span>
+    <a href="/court/{{COURT_SLUG}}/">{{COURT_NAME}}</a><span>/</span>
+    <a href="/category/{{CATEGORY_SLUG}}/">{{CATEGORY}}</a>
+  </div>
+
+  <div class="case-head">
+    <span class="citation-badge mono">{{CITATION}}</span>
+    <h1 class="case-title">{{CASE_TITLE}}</h1>
+    <div class="meta-row">
+      <div class="meta-item"><b>Court</b>{{COURT_NAME}}, {{CITY}}</div>
+      <div class="meta-item"><b>Case No.</b>{{CASE_NUMBER}}</div>
+      <div class="meta-item"><b>Date decided</b>{{DECISION_DATE}}</div>
+      <div class="meta-item"><b>Bench</b>{{JUDGE_NAMES}}</div>
+    </div>
+    <span class="cat-tag">{{CATEGORY}}</span>
+  </div>
+
+  <div class="ad-slot"><span class="ad-label">Advertisement</span><!-- AdSense unit: in-article, 728x90 responsive --></div>
+
+  <div class="headnote">
+    <h2>Headnote</h2>
+    <p>{{HEADNOTE_SUMMARY}}</p>
+  </div>
+
+  <article class="judgment-body">
+    <h2>Judgment</h2>
+    <p>{{JUDGMENT_TEXT}}</p>
+    <!-- Full judgment text inserted here by the daily update script, sourced from the court's public portal -->
+  </article>
+
+  <div class="ad-slot"><span class="ad-label">Advertisement</span><!-- AdSense unit: in-article, 728x90 responsive --></div>
+
+  <div class="related">
+    <h3>Related judgments in {{CATEGORY}}</h3>
+    <div class="related-grid">
+      <div class="rcard"><span class="citation mono">{{RELATED_1_CITATION}}</span>{{RELATED_1_TITLE}}</div>
+      <div class="rcard"><span class="citation mono">{{RELATED_2_CITATION}}</span>{{RELATED_2_TITLE}}</div>
+      <div class="rcard"><span class="citation mono">{{RELATED_3_CITATION}}</span>{{RELATED_3_TITLE}}</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="foot-note">This judgment is public record, reproduced for reference. Pakistan Law Reports is an independent reference site and is not affiliated with {{COURT_NAME}}. Not legal advice.</p>
+  </div>
+</footer>
+
+</body>
+</html>
