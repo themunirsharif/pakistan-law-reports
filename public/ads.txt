@@ -1,0 +1,4 @@
+# Placeholder - replace pub-0000000000000000 with your actual AdSense publisher ID
+# once your AdSense account is approved. This file is required for AdSense to
+# recognize this site as authorized to show its ads.
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
