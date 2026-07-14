@@ -1,4 +1,5 @@
 import { Lora, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 const display = Lora({
@@ -78,6 +79,7 @@ export default function RootLayout({ children }) {
             </div>
           </footer>
         </div>
+        <Analytics />
       </body>
     </html>
   );
