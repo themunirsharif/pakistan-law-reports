@@ -46,8 +46,21 @@ def save_json(path, data):
 
 
 async def get_rendered_html(page, url, timeout=30000):
-    await page.goto(url, timeout=timeout, wait_until="networkidle")
+    await page.goto(url, timeout=timeout, wait_until="domcontentloaded")
+    await asyncio.sleep(3)  # give client-side JS time to render content
     return await page.content()
+
+
+def normalize_url(href):
+    """
+    This site's internal links are sometimes missing the '/caselaw' prefix
+    that the working pages actually need (e.g. a link says '/public/foo' but
+    the real, working path is '/caselaw/public/foo'). Fix that here.
+    """
+    full_url = urljoin(BASE, href)
+    if "/caselaw/" not in full_url and full_url.startswith(f"{BASE}/public"):
+        full_url = full_url.replace(f"{BASE}/public", f"{BASE}/caselaw/public")
+    return full_url
 
 
 def find_links(html, must_contain):
@@ -56,7 +69,7 @@ def find_links(html, must_contain):
     for link in soup.find_all("a", href=True):
         href = link["href"]
         if any(s in href for s in must_contain):
-            full_url = urljoin(BASE, href)
+            full_url = normalize_url(href)
             block = link.find_parent(["div", "li", "tr"]) or link.parent
             text = block.get_text(" ", strip=True) if block else link.get_text(" ", strip=True)
             found.append({"url": full_url, "text": text})
@@ -73,7 +86,7 @@ def parse_case_entries(html):
         href = link["href"]
         if "view-file" not in href and "case-detail" not in href:
             continue
-        full_url = urljoin(BASE, href)
+        full_url = normalize_url(href)
         block = link.find_parent(["div", "li", "tr"]) or link.parent
         text = block.get_text(" ", strip=True) if block else link.get_text(" ", strip=True)
         m = CITATION_RE.search(text)
