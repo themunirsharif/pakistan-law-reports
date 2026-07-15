@@ -59,9 +59,39 @@ export default function JudgmentPage({ params }) {
           {j.court && j.court !== 'Not specified' && <span className="tag outline">{j.court}</span>}
           {j.year && <span className="tag outline">{j.year}</span>}
         </div>
+        {j.judges && (
+          <p style={{ marginTop: 14, fontSize: '0.92rem', color: 'var(--ink-muted)' }}>
+            <strong>Bench:</strong> {j.judges}
+          </p>
+        )}
       </div>
 
       <article className="judgment-body">{j.full_text}</article>
+
+      {j.has_full_text === false && (
+        <div
+          style={{
+            marginTop: 24,
+            padding: 16,
+            background: 'var(--paper)',
+            border: '1px solid var(--line)',
+            borderRadius: 3,
+            fontSize: '0.9rem',
+          }}
+        >
+          Full judgment text for this case is not yet available on Pakistan Law Reports.
+          {j.source_url ? (
+            <>
+              {' '}
+              <a href={j.source_url} target="_blank" rel="noopener noreferrer">
+                View the full order on the official Sindh High Court portal
+              </a>.
+            </>
+          ) : (
+            ' Check the official Sindh High Court case law portal for the complete order.'
+          )}
+        </div>
+      )}
 
       <div className="source-note">
         This judgment is reproduced from a publicly available source for informational purposes
