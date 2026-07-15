@@ -116,6 +116,39 @@ a { color: inherit; }
 .footer-nav a { text-decoration: none; color: var(--gold-soft); font-size: 0.9rem; }
 .footer-fine { font-size: 0.78rem; color: #8fa0bd; margin: 0; }
 
+/* ---------- Announcement banner ---------- */
+.announcement-bar {
+  background: var(--gold);
+  color: var(--navy-deep);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  text-align: center;
+  font-size: 0.92rem;
+}
+
+.announcement-badge {
+  background: var(--navy-deep);
+  color: var(--gold-soft);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.announcement-text strong {
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .announcement-bar { padding: 10px 14px; font-size: 0.85rem; }
+}
+
 /* ---------- Hero ---------- */
 .hero {
   padding: 64px 32px 40px;
