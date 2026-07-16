@@ -20,6 +20,7 @@ Runs on a schedule via .github/workflows/update-shc.yml
 import json
 import os
 import re
+import time
 
 import requests
 from bs4 import BeautifulSoup
@@ -36,6 +37,7 @@ INDEX_FILE = os.path.join(DATA_DIR, "judgments_index.json")
 SHARD_MAP_FILE = os.path.join(DATA_DIR, "shard-map.json")
 SEEN_FILE = os.path.join(DATA_DIR, "shc_seen_citations.json")
 SHARD_DIR = os.path.join(DATA_DIR, "judgments")
+UPDATE_LOG_FILE = os.path.join(DATA_DIR, "update_log.json")
 TARGET_SHARD_SIZE = 2_000_000  # ~2MB per shard, safely under GitHub's 25MB limit
 
 TOPIC_RULES = [
@@ -181,8 +183,16 @@ def main():
 
     print(f"\n{len(new_records)} genuinely new judgments found.")
 
+    update_log = load_json(UPDATE_LOG_FILE, [])
+
     if not new_records:
         save_json(SEEN_FILE, sorted(seen_citations))
+        update_log.append({
+            "date": time.strftime("%Y-%m-%d"),
+            "added": 0,
+            "total_after": len(index),
+        })
+        save_json(UPDATE_LOG_FILE, update_log[-90:])  # keep last 90 days
         print("Nothing to add. Done.")
         return
 
@@ -232,6 +242,13 @@ def main():
 
     print(f"Added {len(new_records)} new judgments to the live database.")
     print(f"Total judgments now: {len(index)}")
+
+    update_log.append({
+        "date": time.strftime("%Y-%m-%d"),
+        "added": len(new_records),
+        "total_after": len(index),
+    })
+    save_json(UPDATE_LOG_FILE, update_log[-90:])  # keep last 90 days
 
 
 if __name__ == "__main__":

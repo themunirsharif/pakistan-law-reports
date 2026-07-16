@@ -1,20 +1,33 @@
-import { getAllJudgments, getAllCourts, getAllYears, getStats } from '../lib/data';
+import { getAllJudgments, getAllCourts, getAllYears, getAllTopics, getStats, getLatestUpdate } from '../lib/data';
 import SearchBrowse from '../components/SearchBrowse';
 
 export default function HomePage() {
   const judgments = getAllJudgments();
   const courts = getAllCourts();
   const years = getAllYears();
+  const topics = getAllTopics();
   const stats = getStats();
+  const latestUpdate = getLatestUpdate();
 
   return (
     <>
       <div className="announcement-bar">
-        <span className="announcement-badge">JUST UPDATED</span>
+        <span className="announcement-badge">
+          {latestUpdate && latestUpdate.added > 0 ? 'UPDATED TODAY' : 'LIVE'}
+        </span>
         <span className="announcement-text">
-          We&apos;ve added <strong>19,000+ new Sindh High Court judgments</strong> — Pakistan Law
-          Reports now covers <strong>{stats.total.toLocaleString()} cases</strong> across every
-          major court in Pakistan, free to search.
+          {latestUpdate && latestUpdate.added > 0 ? (
+            <>
+              <strong>{latestUpdate.added} new judgments</strong> added on {latestUpdate.date} —
+              Pakistan Law Reports now covers <strong>{stats.total.toLocaleString()} cases</strong>,
+              updated daily, free to search.
+            </>
+          ) : (
+            <>
+              Pakistan Law Reports now covers <strong>{stats.total.toLocaleString()} cases</strong> across
+              every major court in Pakistan — updated daily, free to search.
+            </>
+          )}
         </span>
       </div>
 
@@ -42,7 +55,7 @@ export default function HomePage() {
       </section>
 
       <div style={{ paddingTop: 32 }}>
-        <SearchBrowse judgments={judgments} courts={courts} years={years} />
+        <SearchBrowse judgments={judgments} courts={courts} years={years} topics={topics} />
       </div>
     </>
   );
