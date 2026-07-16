@@ -232,6 +232,113 @@ a { color: inherit; }
 }
 
 /* ---------- Results list ---------- */
+/* ---------- Topic browse grid ---------- */
+.topic-browse {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 32px 8px;
+}
+
+.topic-browse h2 {
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 24px;
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.topic-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 20px 14px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.topic-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.topic-icon { font-size: 1.6rem; }
+
+.topic-name {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--navy);
+}
+
+.topic-count {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+}
+
+/* ---------- Judgment action buttons (copy citation / share) ---------- */
+.judgment-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border-radius: 3px;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--font-body), sans-serif;
+}
+
+.action-btn:hover { border-color: var(--navy); }
+
+.action-btn.whatsapp {
+  border-color: #25d366;
+  color: #128c3e;
+}
+
+.action-btn.whatsapp:hover { background: #eafaf1; }
+
+/* ---------- Topic tag colors ---------- */
+.tag.topic-criminal { background: #7a1f2b; }
+.tag.topic-constitutional { background: #1f4e7a; }
+.tag.topic-family { background: #7a4a1f; }
+.tag.topic-property { background: #2f6b4f; }
+.tag.topic-tax { background: #5c3d7a; }
+.tag.topic-banking { background: #1f6b7a; }
+.tag.topic-labour { background: #7a6a1f; }
+.tag.topic-company { background: #3d3d7a; }
+.tag.topic-succession { background: #6b2f52; }
+.tag.topic-civil { background: #3d5c7a; }
+
+/* ---------- Print styles ---------- */
+@media print {
+  .site-header, .site-footer, .announcement-bar, .filter-row, .search-wrap,
+  .source-note, .judgment-actions, nav { display: none !important; }
+  .judgment-page { max-width: 100%; padding: 0; }
+  .judgment-body { font-size: 11pt; }
+  body { background: white; }
+}
+
 .results-section {
   max-width: 880px;
   margin: 0 auto;

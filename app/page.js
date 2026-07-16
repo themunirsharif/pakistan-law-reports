@@ -1,5 +1,19 @@
-import { getAllJudgments, getAllCourts, getAllYears, getAllTopics, getStats, getLatestUpdate } from '../lib/data';
+import { getAllJudgments, getAllCourts, getAllYears, getAllTopics, getStats, getLatestUpdate, getTopicCounts, topicToSlug } from '../lib/data';
 import SearchBrowse from '../components/SearchBrowse';
+
+const TOPIC_ICONS = {
+  'Criminal Law': '⚖️',
+  'Constitutional Law': '📜',
+  'Family Law': '👨‍👩‍👧',
+  'Property & Rent': '🏠',
+  'Tax Law': '💰',
+  'Banking & Corporate': '🏦',
+  'Labour & Service': '👷',
+  'Company Law': '🏢',
+  'Succession & Inheritance': '📋',
+  'Civil Law': '🗂️',
+  'General': '📄',
+};
 
 export default function HomePage() {
   const judgments = getAllJudgments();
@@ -8,6 +22,11 @@ export default function HomePage() {
   const topics = getAllTopics();
   const stats = getStats();
   const latestUpdate = getLatestUpdate();
+  const topicCounts = getTopicCounts();
+
+  const topTopics = topics
+    .filter((t) => t !== 'General')
+    .sort((a, b) => (topicCounts[b] || 0) - (topicCounts[a] || 0));
 
   return (
     <>
@@ -54,7 +73,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div style={{ paddingTop: 32 }}>
+      <section className="topic-browse">
+        <h2>Browse by legal topic</h2>
+        <div className="topic-grid">
+          {topTopics.map((t) => (
+            <a key={t} href={`/topics/${topicToSlug(t)}`} className="topic-card">
+              <span className="topic-icon" aria-hidden="true">{TOPIC_ICONS[t] || '📄'}</span>
+              <span className="topic-name">{t}</span>
+              <span className="topic-count">{(topicCounts[t] || 0).toLocaleString()} cases</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <div style={{ paddingTop: 8 }}>
         <SearchBrowse judgments={judgments} courts={courts} years={years} topics={topics} />
       </div>
     </>
