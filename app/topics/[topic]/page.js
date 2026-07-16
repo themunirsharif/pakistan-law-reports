@@ -70,10 +70,7 @@ export default function TopicPage({ params, searchParams }) {
           }}
         >
           {currentPage > 1 && (
-            
-              href={`/topics/${slug}?page=${currentPage - 1}`}
-              style={{ padding: '8px 16px', border: '1px solid var(--line)', borderRadius: 3 }}
-            >
+            <a href={`/topics/${slug}?page=${currentPage - 1}`} style={{ padding: '8px 16px', border: '1px solid var(--line)', borderRadius: 3 }}>
               ← Previous
             </a>
           )}
@@ -81,10 +78,7 @@ export default function TopicPage({ params, searchParams }) {
             Page {currentPage} of {totalPages}
           </span>
           {currentPage < totalPages && (
-            
-              href={`/topics/${slug}?page=${currentPage + 1}`}
-              style={{ padding: '8px 16px', border: '1px solid var(--line)', borderRadius: 3 }}
-            >
+            <a href={`/topics/${slug}?page=${currentPage + 1}`} style={{ padding: '8px 16px', border: '1px solid var(--line)', borderRadius: 3 }}>
               Next →
             </a>
           )}
