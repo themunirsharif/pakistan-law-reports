@@ -40,6 +40,17 @@ export default function RootLayout({ children }) {
         <meta name="google-adsense-account" content="ca-pub-0555529856361728" />
         <Script
           async
+          src="https://www.googletagmanager.com/gtag/js?id=G-EMK4SDN378"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-EMK4SDN378');`}
+        </Script>
+        <Script
+          async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0555529856361728"
           crossOrigin="anonymous"
           strategy="beforeInteractive"
