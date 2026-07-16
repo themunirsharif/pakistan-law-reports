@@ -16,9 +16,6 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// Reading searchParams makes this page render per-request instead of being
-// baked into one giant static file - necessary for courts with thousands of
-// judgments (a single static page over ~19MB fails to deploy on Vercel).
 export const dynamic = 'force-dynamic';
 
 export default function CourtPage({ params, searchParams }) {
@@ -73,10 +70,7 @@ export default function CourtPage({ params, searchParams }) {
           }}
         >
           {currentPage > 1 && (
-            <a
-              href={`/courts/${courtSlug}?page=${currentPage - 1}`}
-              style={{ padding: '8px 16px', border: '1px solid var(--line)', borderRadius: 3 }}
-            >
+            <a href={`/courts/${courtSlug}?page=${currentPage - 1}`} style={{ padding: '8px 16px', border: '1px solid var(--line)', borderRadius: 3 }}>
               ← Previous
             </a>
           )}
@@ -84,10 +78,7 @@ export default function CourtPage({ params, searchParams }) {
             Page {currentPage} of {totalPages}
           </span>
           {currentPage < totalPages && (
-            <a
-              href={`/courts/${courtSlug}?page=${currentPage + 1}`}
-              style={{ padding: '8px 16px', border: '1px solid var(--line)', borderRadius: 3 }}
-            >
+            <a href={`/courts/${courtSlug}?page=${currentPage + 1}`} style={{ padding: '8px 16px', border: '1px solid var(--line)', borderRadius: 3 }}>
               Next →
             </a>
           )}
