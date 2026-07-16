@@ -8,13 +8,8 @@ which is dramatically simpler and faster. This version:
 1. Fetches the SHC home page (shows the ~127 most recently reported judgments)
 2. Extracts each one's structured data from its hidden reference textarea
 3. Skips any judgment already in our database (tracked by SHC citation number)
-4. Adds genuinely new ones directly into the site's live database:
-   - data/judgments_index.json (the searchable index)
-   - data/judgments/shard-N.json (full record storage)
-   - data/shard-map.json (slug -> shard lookup)
-5. Commits the changes (handled by the GitHub Action workflow, not this script)
-
-Runs on a schedule via .github/workflows/update-shc.yml
+4. Adds genuinely new ones directly into the site's live database
+5. Self-heals: backfills a missing topic on any entry, every run
 """
 
 import json
@@ -38,7 +33,7 @@ SHARD_MAP_FILE = os.path.join(DATA_DIR, "shard-map.json")
 SEEN_FILE = os.path.join(DATA_DIR, "shc_seen_citations.json")
 SHARD_DIR = os.path.join(DATA_DIR, "judgments")
 UPDATE_LOG_FILE = os.path.join(DATA_DIR, "update_log.json")
-TARGET_SHARD_SIZE = 2_000_000  # ~2MB per shard, safely under GitHub's 25MB limit
+TARGET_SHARD_SIZE = 2_000_000
 
 TOPIC_RULES = [
     ('Criminal Law', re.compile(r'\b(criminal appeal|F\.?I\.?R\.?|Pakistan Penal Code|PPC\b|bail application|murder|criminal revision|acquittal|sessions court|anti-terrorism|Cr\.\s?P\.?C|criminal miscellaneous|Cr\.Bail|Cr\.Rev|Cr\.Acq|Cr\.J\.A|Cr\.Misc)\b', re.I)),
@@ -136,6 +131,15 @@ def main():
     shard_map = load_json(SHARD_MAP_FILE, {})
     existing_slugs = {e['slug'] for e in index}
 
+    backfilled = 0
+    for e in index:
+        if not e.get('topic'):
+            text = f"{e.get('title','')} {e.get('citation','')} {e.get('excerpt','')}"
+            e['topic'] = classify_topic(text)
+            backfilled += 1
+    if backfilled:
+        print(f"  [self-heal] backfilled missing topic on {backfilled} entries")
+
     new_records = []
     for ta in textareas:
         entry = parse_home_entry(ta.get_text())
@@ -186,17 +190,18 @@ def main():
     update_log = load_json(UPDATE_LOG_FILE, [])
 
     if not new_records:
+        if backfilled:
+            save_json(INDEX_FILE, index)
         save_json(SEEN_FILE, sorted(seen_citations))
         update_log.append({
             "date": time.strftime("%Y-%m-%d"),
             "added": 0,
             "total_after": len(index),
         })
-        save_json(UPDATE_LOG_FILE, update_log[-90:])  # keep last 90 days
+        save_json(UPDATE_LOG_FILE, update_log[-90:])
         print("Nothing to add. Done.")
         return
 
-    # Find the last shard file to see if there's room, or start a new one
     shard_files = sorted(
         [f for f in os.listdir(SHARD_DIR) if f.startswith('shard-') and f.endswith('.json')],
         key=lambda f: int(re.search(r'\d+', f).group())
@@ -248,7 +253,7 @@ def main():
         "added": len(new_records),
         "total_after": len(index),
     })
-    save_json(UPDATE_LOG_FILE, update_log[-90:])  # keep last 90 days
+    save_json(UPDATE_LOG_FILE, update_log[-90:])
 
 
 if __name__ == "__main__":
