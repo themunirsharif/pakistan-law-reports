@@ -87,6 +87,7 @@ export default function RootLayout({ children }) {
             <nav className="site-nav">
               <a href="/">Search</a>
               <a href="/lawyers">Lawyers</a>
+              <a href="/law-schools">Law Schools</a>
               <a href="/about">About</a>
               <a href="/contact">Contact</a>
             </nav>
