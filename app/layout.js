@@ -89,8 +89,6 @@ export default function RootLayout({ children }) {
               <a href="/lawyers">Lawyers</a>
               <a href="/law-schools">Law Schools</a>
               <a href="/resources">Resources</a>
-              <a href="/tools/inheritance-calculator">Inheritance Calculator</a>
-              <a href="https://cases.pakistanlawreports.com" target="_blank" rel="noopener noreferrer">Case Manager</a>
               <a href="/about">About</a>
               <a href="/contact">Contact</a>
             </nav>
