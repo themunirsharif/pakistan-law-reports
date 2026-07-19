@@ -2,19 +2,53 @@
 
 import { useState } from 'react';
 
-// Broader, everyday-language keywords than the strict classification regex -
-// real people describe problems informally, not in legal terminology.
-// Includes common Roman Urdu (Urdu written in English letters) terms too.
 const TOPIC_KEYWORDS = {
-  'Family Law': ['divorce', 'khula', 'husband', 'wife', 'custody', 'child', 'marriage', 'dowry', 'maintenance', 'alimony', 'separated', 'nikah', 'talaq', 'shohar', 'biwi', 'bacha', 'bachay', 'bachon', 'shaadi', 'haq mehr', 'nafqa', 'walida', 'khula lena'],
-  'Criminal Law': ['arrested', 'police', 'fir', 'jail', 'bail', 'stolen', 'theft', 'assault', 'beaten', 'threatened', 'accused', 'charged', 'crime', 'giraftar', 'zamanat', 'chori', 'maara', 'dhamki', 'thana', 'mulzim'],
-  'Property & Rent': ['landlord', 'tenant', 'rent', 'deposit', 'evict', 'lease', 'property dispute', 'plot', 'possession of house', 'sale deed', 'makan malik', 'kiraya', 'kirayedar', 'zamin', 'jaidad', 'qabza'],
-  'Labour & Service': ['fired', 'terminated', 'job', 'salary', 'employer', 'employee', 'workplace', 'pension', 'promotion', 'service matter', 'naukri', 'tankhwa', 'malik', 'nikal diya', 'company ne nikala'],
-  'Succession & Inheritance': ['inheritance', 'will', 'father died', 'mother died', 'legal heirs', 'succession', 'estate', 'property after death', 'warasat', 'wirasat', 'wasiyat', 'abu ka intiqal', 'walid ka inteqal', 'mirasi'],
-  'Tax Law': ['tax', 'fbr', 'income tax', 'sales tax', 'audit notice', 'customs'],
-  'Banking & Corporate': ['bank', 'loan', 'default', 'cheque bounced', 'recovery of loan', 'nab', 'qarza', 'karza'],
+  'Family Law': [
+    'divorce', 'khula', 'husband', 'wife', 'custody', 'child', 'children', 'marriage', 'dowry',
+    'maintenance', 'alimony', 'separated', 'nikah', 'talaq', 'shohar', 'biwi', 'bacha', 'bachay',
+    'bachon', 'shaadi', 'haq mehr', 'haq meher', 'nafqa', 'walida', 'khula lena', 'domestic violence',
+    'domestic abuse', 'guardian', 'guardianship', 'visitation', 'access to child', 'child support',
+    'second marriage', 'early marriage', 'child marriage', 'forced marriage', 'nikah nama',
+    'shadi', 'talaq nama', 'ruksati', 'in-laws', 'sasural', 'mother in law', 'saas',
+  ],
+  'Criminal Law': [
+    'arrested', 'police', 'fir', 'jail', 'bail', 'stolen', 'theft', 'assault', 'beaten',
+    'threatened', 'accused', 'charged', 'crime', 'giraftar', 'zamanat', 'chori', 'maara',
+    'dhamki', 'thana', 'mulzim', 'domestic violence', 'domestic abuse', 'beat me', 'hit me',
+    'abusive husband', 'wife beating', 'harassment', 'violence', 'child abuse', 'sexual abuse',
+    'molestation', 'rape', 'zina', 'kidnapping', 'kidnapped', 'missing person', 'gum ho gaya',
+    'missing child', 'bacha gum', 'murder', 'qatal', 'blackmail', 'blackmailing', 'extortion',
+    'cybercrime', 'online fraud', 'fraud', 'dhoka dahi', 'false case', 'jhoota case',
+    'honor killing', 'karo kari', 'torture', 'gang rape', 'attempted rape', 'child marriage case',
+    'suicide', 'khudkushi', 'acid attack', 'abduction',
+  ],
+  'Property & Rent': [
+    'landlord', 'tenant', 'rent', 'deposit', 'evict', 'lease', 'property dispute', 'plot',
+    'possession of house', 'sale deed', 'makan malik', 'kiraya', 'kirayedar', 'zamin', 'jaidad',
+    'qabza', 'illegal possession', 'fraud property', 'fake registry', 'registry fraud',
+    'property fraud', 'boundary dispute', 'inherited property', 'ancestral property',
+  ],
+  'Labour & Service': [
+    'fired', 'terminated', 'job', 'salary', 'employer', 'employee', 'workplace', 'pension',
+    'promotion', 'service matter', 'naukri', 'tankhwa', 'malik', 'nikal diya', 'company ne nikala',
+    'unpaid salary', 'salary not paid', 'wrongful termination', 'workplace harassment',
+    'gratuity', 'provident fund', 'notice period',
+  ],
+  'Succession & Inheritance': [
+    'inheritance', 'will', 'father died', 'mother died', 'legal heirs', 'succession', 'estate',
+    'property after death', 'warasat', 'wirasat', 'wasiyat', 'abu ka intiqal', 'walid ka inteqal',
+    'mirasi', 'share in property', 'brother took my share', 'sister denied inheritance',
+  ],
+  'Tax Law': ['tax', 'fbr', 'income tax', 'sales tax', 'audit notice', 'customs', 'tax notice'],
+  'Banking & Corporate': [
+    'bank', 'loan', 'default', 'cheque bounced', 'recovery of loan', 'nab', 'qarza', 'karza',
+    'cheque dishonour', 'bounced cheque', 'credit card fraud', 'account frozen',
+  ],
   'Company Law': ['company', 'business partner', 'shareholder', 'winding up', 'partnership dispute', 'partner ne dhoka'],
-  'Constitutional Law': ['fundamental rights', 'constitution', 'government action', 'writ petition', 'illegal detention', 'police misconduct', 'huqooq', 'sarkar ne'],
+  'Constitutional Law': [
+    'fundamental rights', 'constitution', 'government action', 'writ petition', 'illegal detention',
+    'police misconduct', 'huqooq', 'sarkar ne', 'human rights violation', 'wrongly detained',
+  ],
   'Civil Law': ['contract', 'agreement broken', 'sue', 'lawsuit', 'breach', 'damages', 'compensation', 'muqadma', 'adalat', 'case'],
 };
 
@@ -22,16 +56,18 @@ function findMatchingTopic(text) {
   const lower = text.toLowerCase();
   let bestTopic = null;
   let bestScore = 0;
+  let matchedKeywords = [];
 
   for (const [topic, keywords] of Object.entries(TOPIC_KEYWORDS)) {
-    const score = keywords.filter((kw) => lower.includes(kw)).length;
-    if (score > bestScore) {
-      bestScore = score;
+    const found = keywords.filter((kw) => lower.includes(kw));
+    if (found.length > bestScore) {
+      bestScore = found.length;
       bestTopic = topic;
+      matchedKeywords = found;
     }
   }
 
-  return bestScore > 0 ? bestTopic : null;
+  return { topic: bestScore > 0 ? bestTopic : null, matchedKeywords };
 }
 
 function slugifyTopic(topic) {
@@ -44,15 +80,13 @@ export default function CaseFinder({ topicJudgments }) {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const matchedTopic = findMatchingTopic(description);
+    const { topic: matchedTopic, matchedKeywords } = findMatchingTopic(description);
     setResult(matchedTopic);
 
-    // Track only the matched TOPIC category, never the person's actual
-    // description - keeps analytics useful without storing sensitive
-    // personal details.
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
       window.gtag('event', 'case_finder_search', {
         matched_topic: matchedTopic || 'no_match',
+        matched_keywords: matchedKeywords.join(', ') || 'none',
       });
     }
   };
