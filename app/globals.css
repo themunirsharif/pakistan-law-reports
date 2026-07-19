@@ -285,6 +285,54 @@ a { color: inherit; }
   color: var(--ink-muted);
 }
 
+/* ---------- Latest judgments section ---------- */
+.latest-judgments {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 32px 8px;
+}
+
+.latest-judgments h2 {
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 24px;
+}
+
+.latest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.latest-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.latest-card:hover { border-color: var(--navy); border-left-color: var(--gold); }
+
+.latest-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--navy);
+  line-height: 1.3;
+}
+
+.latest-meta {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+}
+
 /* ---------- Judgment action buttons (copy citation / share) ---------- */
 .judgment-actions {
   display: flex;
@@ -479,6 +527,104 @@ a { color: inherit; }
 .content-page h1 { margin-bottom: 20px; }
 .content-page h2 { font-size: 1.2rem; margin-top: 32px; }
 .content-page p { margin: 0 0 16px; }
+
+/* ---------- Lawyer directory ---------- */
+.lawyer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* ---------- Forms (calculator, case finder) ---------- */
+.form-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.form-row {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.form-row label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-family: var(--font-body), sans-serif;
+  box-sizing: border-box;
+}
+
+.form-row textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.btn-primary {
+  padding: 11px 24px;
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-family: var(--font-body), sans-serif;
+}
+
+.btn-primary:hover { background: var(--navy-deep); }
+
+.btn-secondary {
+  padding: 9px 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  cursor: pointer;
+  font-family: var(--font-body), sans-serif;
+  text-decoration: none;
+  color: var(--ink);
+  display: inline-block;
+}
+
+.lawyer-card {
+  padding: 18px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.lawyer-name {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--navy);
+  margin: 0 0 4px;
+}
+
+.lawyer-meta {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  font-family: var(--font-mono), monospace;
+  margin-bottom: 10px;
+}
+
+.lawyer-bio { font-size: 0.9rem; margin-bottom: 8px; }
+.lawyer-contact { font-size: 0.85rem; color: var(--navy); margin: 0; }
 
 @media (max-width: 640px) {
   .site-header { padding: 14px 18px; }
