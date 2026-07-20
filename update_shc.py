@@ -1,15 +1,9 @@
 """
 Sindh High Court - Daily Auto-Updater (v2, corrected)
 --------------------------------------------------------
-Earlier version used Playwright (headless browser) because we assumed the
-site needed JavaScript rendering. It doesn't - a plain request works fine,
-which is dramatically simpler and faster. This version:
-
-1. Fetches the SHC home page (shows the ~127 most recently reported judgments)
-2. Extracts each one's structured data from its hidden reference textarea
-3. Skips any judgment already in our database (tracked by SHC citation number)
-4. Adds genuinely new ones directly into the site's live database
-5. Self-heals: backfills a missing topic on any entry, every run
+Fetches the SHC home page, extracts new judgments, adds them to the site's
+live database, and retries with a longer timeout if the site is slow to
+respond (which seems to happen more often on weekends).
 """
 
 import json
@@ -117,9 +111,28 @@ def year_from_citation_or_case(citation, case_header):
     return ''
 
 
+def fetch_with_retry(url, headers, max_retries=3, timeout=60):
+    """
+    The SHC site is occasionally slow to respond (especially seems worse on
+    weekends) - retry a few times with a longer timeout instead of failing
+    the whole run on one slow moment.
+    """
+    last_error = None
+    for attempt in range(1, max_retries + 1):
+        try:
+            r = requests.get(url, headers=headers, timeout=timeout)
+            return r
+        except requests.exceptions.RequestException as ex:
+            last_error = ex
+            print(f"  [warn] attempt {attempt}/{max_retries} failed: {ex}")
+            if attempt < max_retries:
+                time.sleep(10 * attempt)
+    raise last_error
+
+
 def main():
     print("Fetching SHC home page...")
-    r = requests.get(HOME_URL, headers=HEADERS, timeout=30)
+    r = fetch_with_retry(HOME_URL, HEADERS)
     print(f"  status {r.status_code}, {len(r.text)} characters")
 
     soup = BeautifulSoup(r.text, "html.parser")
