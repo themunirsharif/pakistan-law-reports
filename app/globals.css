@@ -141,6 +141,47 @@ a { color: inherit; }
   flex-shrink: 0;
 }
 
+/* ---------- Lawyer recruitment banner ---------- */
+.lawyer-cta-banner {
+  background: var(--navy);
+  color: white;
+  padding: 22px 24px;
+  margin: 32px auto;
+  max-width: 900px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.lawyer-cta-text {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.lawyer-cta-text strong { color: var(--gold-soft); }
+
+.lawyer-cta-button {
+  flex-shrink: 0;
+  background: var(--gold);
+  color: var(--navy-deep);
+  font-weight: 700;
+  padding: 12px 26px;
+  border-radius: 24px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.lawyer-cta-button:hover { background: var(--gold-soft); }
+
+@media (max-width: 640px) {
+  .lawyer-cta-banner { flex-direction: column; text-align: center; padding: 20px; }
+}
+
 .announcement-text strong {
   font-weight: 700;
 }

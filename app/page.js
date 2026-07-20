@@ -76,46 +76,47 @@ export default function HomePage() {
         </div>
 
         <div style={{ marginTop: 40, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto' }}>
-          <h2 style={{ fontSize: '1rem', marginBottom: 14 }}>Featured Lawyers</h2>
-          {featuredLawyers.length > 0 ? (
-            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
-              {featuredLawyers.map((l, i) => (
+          {featuredLawyers.length > 0 && (
+            <>
+              <h2 style={{ fontSize: '1rem', marginBottom: 14 }}>Featured Lawyers</h2>
+              <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
+                {featuredLawyers.map((l, i) => (
+                  <a
+                    key={i}
+                    href={`/lawyers/profile/${l.slug}`}
+                    style={{
+                      padding: '14px 20px', border: '1px solid var(--line)', borderRadius: 3,
+                      background: 'var(--paper-raised)', textDecoration: 'none', minWidth: 180,
+                    }}
+                  >
+                    <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--navy)' }}>{l.name}</div>
+                    <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-mono)' }}>
+                      {[l.city, l.practice_area].filter(Boolean).join(' · ')}
+                    </div>
+                  </a>
+                ))}
                 <a
-                  key={i}
-                  href={`/lawyers/profile/${l.slug}`}
+                  href="/lawyers"
                   style={{
-                    padding: '14px 20px', border: '1px solid var(--line)', borderRadius: 3,
-                    background: 'var(--paper-raised)', textDecoration: 'none', minWidth: 180,
+                    padding: '14px 20px', border: '1px dashed var(--line)', borderRadius: 3,
+                    display: 'flex', alignItems: 'center', fontSize: '0.9rem', color: 'var(--ink-muted)',
                   }}
                 >
-                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--navy)' }}>{l.name}</div>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-mono)' }}>
-                    {[l.city, l.practice_area].filter(Boolean).join(' · ')}
-                  </div>
+                  See full directory →
                 </a>
-              ))}
-              <a
-                href="/lawyers"
-                style={{
-                  padding: '14px 20px', border: '1px dashed var(--line)', borderRadius: 3,
-                  display: 'flex', alignItems: 'center', fontSize: '0.9rem', color: 'var(--ink-muted)',
-                }}
-              >
-                See full directory →
-              </a>
-            </div>
-          ) : (
-            <div
-              style={{
-                padding: '18px 20px', border: '1px dashed var(--line)', borderRadius: 3,
-                background: 'var(--paper-raised)', fontSize: '0.9rem', color: 'var(--ink-muted)',
-              }}
-            >
-              Are you a lawyer in Pakistan? <a href="/lawyers">Get listed in our free directory →</a>
-            </div>
+              </div>
+            </>
           )}
         </div>
       </section>
+
+      <div className="lawyer-cta-banner">
+        <p className="lawyer-cta-text">
+          📌 <strong>Are you a lawyer?</strong> Get listed for free — submit your profile, license
+          number, and practice area for review.
+        </p>
+        <a href="/lawyers" className="lawyer-cta-button">Get Listed →</a>
+      </div>
 
       <section className="topic-browse">
         <h2>Browse by legal topic</h2>
