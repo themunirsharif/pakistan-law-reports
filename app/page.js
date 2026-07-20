@@ -1,4 +1,4 @@
-import { getAllJudgments, getAllCourts, getAllYears, getAllTopics, getStats, getLatestUpdate, getTopicCounts, topicToSlug } from '../lib/data';
+import { getAllJudgments, getAllCourts, getAllYears, getAllTopics, getStats, getLatestUpdate, getTopicCounts, topicToSlug, getLatestJudgments, getAllLawyers } from '../lib/data';
 import SearchBrowse from '../components/SearchBrowse';
 
 const TOPIC_ICONS = {
@@ -23,6 +23,9 @@ export default function HomePage() {
   const stats = getStats();
   const latestUpdate = getLatestUpdate();
   const topicCounts = getTopicCounts();
+  const latestJudgments = getLatestJudgments(8);
+  const lawyers = getAllLawyers();
+  const featuredLawyers = lawyers.slice(0, 3);
 
   const topTopics = topics
     .filter((t) => t !== 'General')
@@ -71,6 +74,47 @@ export default function HomePage() {
             <span className="stat-label">Year range</span>
           </div>
         </div>
+
+        <div style={{ marginTop: 40, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto' }}>
+          <h2 style={{ fontSize: '1rem', marginBottom: 14 }}>Featured Lawyers</h2>
+          {featuredLawyers.length > 0 ? (
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
+              {featuredLawyers.map((l, i) => (
+                <a
+                  key={i}
+                  href={`/lawyers/profile/${l.slug}`}
+                  style={{
+                    padding: '14px 20px', border: '1px solid var(--line)', borderRadius: 3,
+                    background: 'var(--paper-raised)', textDecoration: 'none', minWidth: 180,
+                  }}
+                >
+                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--navy)' }}>{l.name}</div>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-mono)' }}>
+                    {[l.city, l.practice_area].filter(Boolean).join(' · ')}
+                  </div>
+                </a>
+              ))}
+              <a
+                href="/lawyers"
+                style={{
+                  padding: '14px 20px', border: '1px dashed var(--line)', borderRadius: 3,
+                  display: 'flex', alignItems: 'center', fontSize: '0.9rem', color: 'var(--ink-muted)',
+                }}
+              >
+                See full directory →
+              </a>
+            </div>
+          ) : (
+            <div
+              style={{
+                padding: '18px 20px', border: '1px dashed var(--line)', borderRadius: 3,
+                background: 'var(--paper-raised)', fontSize: '0.9rem', color: 'var(--ink-muted)',
+              }}
+            >
+              Are you a lawyer in Pakistan? <a href="/lawyers">Get listed in our free directory →</a>
+            </div>
+          )}
+        </div>
       </section>
 
       <section className="topic-browse">
@@ -85,6 +129,22 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {latestJudgments.length > 0 && (
+        <section className="latest-judgments">
+          <h2>Latest judgments</h2>
+          <div className="latest-grid">
+            {latestJudgments.map((j) => (
+              <a key={j.slug} href={`/judgments/${j.slug}`} className="latest-card">
+                <span className="latest-title">{j.title}</span>
+                <span className="latest-meta">
+                  {[j.citation, j.court, j.year].filter(Boolean).join(' · ')}
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
 
       <div style={{ paddingTop: 8 }}>
         <SearchBrowse judgments={judgments} courts={courts} years={years} topics={topics} />

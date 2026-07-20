@@ -1,4 +1,5 @@
 import { getAllLawyers, getAdvocateDivisions, divisionToSlug } from '../../lib/data';
+import LawyerSubmissionForm from '../../components/LawyerSubmissionForm';
 
 export const metadata = {
   title: 'Lawyer Directory',
@@ -46,36 +47,26 @@ export default function LawyersPage() {
       )}
 
       {lawyers.length === 0 ? (
-        <div
-          style={{
-            marginTop: 32,
-            padding: 24,
-            background: 'var(--paper-raised)',
-            border: '1px solid var(--line)',
-            borderRadius: 3,
-            textAlign: 'center',
-          }}
-        >
-          <p style={{ marginBottom: 8 }}>
+        <div style={{ marginTop: 32 }}>
+          <p style={{ marginBottom: 8, textAlign: 'center' }}>
             <strong>This directory is just getting started.</strong>
           </p>
-          <p style={{ marginBottom: 0, color: 'var(--ink-muted)' }}>
-            Are you a lawyer in Pakistan interested in being listed?{' '}
-            <a href="/contact">Get in touch</a> with your name, city, practice area, and contact
-            details, and we&apos;ll review it for inclusion.
+          <p style={{ color: 'var(--ink-muted)', textAlign: 'center', marginBottom: 24 }}>
+            Are you a lawyer in Pakistan interested in being listed? Submit your details below.
           </p>
+          <LawyerSubmissionForm />
         </div>
       ) : (
         <div className="lawyer-grid">
           {lawyers.map((l, i) => (
-            <div key={i} className="lawyer-card">
+            <a key={i} href={`/lawyers/profile/${l.slug}`} className="lawyer-card" style={{ display: 'block', textDecoration: 'none' }}>
               <h3 className="lawyer-name">{l.name}</h3>
               <div className="lawyer-meta">
                 {[l.city, l.practice_area].filter(Boolean).join(' · ')}
               </div>
               {l.bio && <p className="lawyer-bio">{l.bio}</p>}
               {l.contact && <p className="lawyer-contact">{l.contact}</p>}
-            </div>
+            </a>
           ))}
         </div>
       )}

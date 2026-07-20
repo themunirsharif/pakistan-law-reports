@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 
+// Broader, everyday-language keywords than the strict classification regex -
+// real people describe problems informally, not in legal terminology.
+// Includes common Roman Urdu (Urdu written in English letters) terms too.
 const TOPIC_KEYWORDS = {
   'Family Law': [
     'divorce', 'khula', 'husband', 'wife', 'custody', 'child', 'children', 'marriage', 'dowry',
@@ -83,6 +86,10 @@ export default function CaseFinder({ topicJudgments }) {
     const { topic: matchedTopic, matchedKeywords } = findMatchingTopic(description);
     setResult(matchedTopic);
 
+    // Track the matched TOPIC plus which specific keywords fired - this
+    // gives real insight into common issues (e.g. "makan malik" matching
+    // often enough to deserve its own page) without ever storing the
+    // person's actual description text.
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
       window.gtag('event', 'case_finder_search', {
         matched_topic: matchedTopic || 'no_match',
