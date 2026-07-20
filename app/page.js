@@ -74,62 +74,11 @@ export default function HomePage() {
             <span className="stat-label">Year range</span>
           </div>
         </div>
-
-        <div style={{ marginTop: 40, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto' }}>
-          {featuredLawyers.length > 0 && (
-            <>
-              <h2 style={{ fontSize: '1rem', marginBottom: 14 }}>Featured Lawyers</h2>
-              <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
-                {featuredLawyers.map((l, i) => (
-                  <a
-                    key={i}
-                    href={`/lawyers/profile/${l.slug}`}
-                    style={{
-                      padding: '14px 20px', border: '1px solid var(--line)', borderRadius: 3,
-                      background: 'var(--paper-raised)', textDecoration: 'none', minWidth: 180,
-                    }}
-                  >
-                    <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--navy)' }}>{l.name}</div>
-                    <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-mono)' }}>
-                      {[l.city, l.practice_area].filter(Boolean).join(' · ')}
-                    </div>
-                  </a>
-                ))}
-                <a
-                  href="/lawyers"
-                  style={{
-                    padding: '14px 20px', border: '1px dashed var(--line)', borderRadius: 3,
-                    display: 'flex', alignItems: 'center', fontSize: '0.9rem', color: 'var(--ink-muted)',
-                  }}
-                >
-                  See full directory →
-                </a>
-              </div>
-            </>
-          )}
-        </div>
       </section>
 
-      <div className="lawyer-cta-banner">
-        <p className="lawyer-cta-text">
-          📌 <strong>Are you a lawyer?</strong> Get listed for free — submit your profile, license
-          number, and practice area for review.
-        </p>
-        <a href="/lawyers" className="lawyer-cta-button">Get Listed →</a>
+      <div style={{ paddingTop: 8 }}>
+        <SearchBrowse judgments={judgments} courts={courts} years={years} topics={topics} />
       </div>
-
-      <section className="topic-browse">
-        <h2>Browse by legal topic</h2>
-        <div className="topic-grid">
-          {topTopics.map((t) => (
-            <a key={t} href={`/topics/${topicToSlug(t)}`} className="topic-card">
-              <span className="topic-icon" aria-hidden="true">{TOPIC_ICONS[t] || '📄'}</span>
-              <span className="topic-name">{t}</span>
-              <span className="topic-count">{(topicCounts[t] || 0).toLocaleString()} cases</span>
-            </a>
-          ))}
-        </div>
-      </section>
 
       {latestJudgments.length > 0 && (
         <section className="latest-judgments">
@@ -147,8 +96,54 @@ export default function HomePage() {
         </section>
       )}
 
-      <div style={{ paddingTop: 8 }}>
-        <SearchBrowse judgments={judgments} courts={courts} years={years} topics={topics} />
+      <section className="topic-browse">
+        <h2>Browse by legal topic</h2>
+        <div className="topic-grid">
+          {topTopics.map((t) => (
+            <a key={t} href={`/topics/${topicToSlug(t)}`} className="topic-card">
+              <span className="topic-icon" aria-hidden="true">{TOPIC_ICONS[t] || '📄'}</span>
+              <span className="topic-name">{t}</span>
+              <span className="topic-count">{(topicCounts[t] || 0).toLocaleString()} cases</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {featuredLawyers.length > 0 && (
+        <section style={{ maxWidth: 900, margin: '0 auto', padding: '0 32px 24px' }}>
+          <h2 style={{ fontSize: '1rem', marginBottom: 14, textAlign: 'center' }}>Featured Lawyers</h2>
+          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
+            {featuredLawyers.map((l, i) => (
+              <a
+                key={i}
+                href={`/lawyers/profile/${l.slug}`}
+                style={{
+                  padding: '14px 20px', border: '1px solid var(--line)', borderRadius: 3,
+                  background: 'var(--paper-raised)', textDecoration: 'none', minWidth: 180,
+                }}
+              >
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--navy)' }}>{l.name}</div>
+                <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-mono)' }}>
+                  {[l.city, l.practice_area].filter(Boolean).join(' · ')}
+                </div>
+              </a>
+            ))}
+            <a
+              href="/lawyers"
+              style={{
+                padding: '14px 20px', border: '1px dashed var(--line)', borderRadius: 3,
+                display: 'flex', alignItems: 'center', fontSize: '0.9rem', color: 'var(--ink-muted)',
+              }}
+            >
+              See full directory →
+            </a>
+          </div>
+        </section>
+      )}
+
+      <div className="lawyer-cta-minimal">
+        📌 <strong>Are you a lawyer?</strong> Get listed for free.{' '}
+        <a href="/lawyers">Submit your profile →</a>
       </div>
     </>
   );
