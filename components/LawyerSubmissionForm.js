@@ -73,7 +73,10 @@ export default function LawyerSubmissionForm() {
     <form onSubmit={handleSubmit} className="form-card">
       <p style={{ marginBottom: 20, fontSize: '0.88rem', color: 'var(--ink-muted)' }}>
         Every submission is reviewed — including verifying your license number — before
-        publishing. Nothing goes live automatically.
+        publishing. Nothing goes live automatically. If you&apos;d like a photo included on your
+        profile, please email it separately to{' '}
+        <a href="mailto:contact@pakistanlawreports.com">contact@pakistanlawreports.com</a> after
+        submitting this form.
       </p>
 
       {error && (
@@ -105,10 +108,6 @@ export default function LawyerSubmissionForm() {
       <div className="form-row">
         <label>Phone (optional, shown on your public profile if provided)</label>
         <input type="text" name="phone" />
-      </div>
-      <div className="form-row">
-        <label>Photo</label>
-        <input type="file" name="photo" accept="image/*" />
       </div>
       <div className="form-row">
         <label>Short Bio / Notable Achievements (self-reported)</label>
