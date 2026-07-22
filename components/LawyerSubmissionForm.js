@@ -28,10 +28,25 @@ export default function LawyerSubmissionForm() {
       if (res.ok) {
         setSubmitted(true);
       } else {
-        setError('Something went wrong submitting the form. Please try again, or email contact@pakistanlawreports.com directly.');
+        let detail = '';
+        try {
+          const body = await res.json();
+          if (body?.errors?.length) {
+            detail = body.errors.map((er) => er.message).join('; ');
+          } else if (body?.error) {
+            detail = body.error;
+          }
+        } catch {
+          // response wasn't JSON - fall through to generic message
+        }
+        setError(
+          detail
+            ? `Submission failed: ${detail}`
+            : `Submission failed (status ${res.status}). Please try again, or email contact@pakistanlawreports.com directly.`
+        );
       }
-    } catch {
-      setError('Something went wrong submitting the form. Please try again, or email contact@pakistanlawreports.com directly.');
+    } catch (networkErr) {
+      setError(`Network error: ${networkErr.message}. Please try again, or email contact@pakistanlawreports.com directly.`);
     } finally {
       setLoading(false);
     }
