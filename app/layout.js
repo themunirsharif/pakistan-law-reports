@@ -90,6 +90,7 @@ export default function RootLayout({ children }) {
               <a href="/">Search</a>
               <a href="/find-cases">Find Related Cases</a>
               <a href="/case-highlights">Case Highlights</a>
+              <a href="/legal-texts">Statutes &amp; Resources</a>
               <a href="/lawyers">Lawyers</a>
               <a href="/law-schools">Law Schools</a>
               <a href="/resources">Resources</a>

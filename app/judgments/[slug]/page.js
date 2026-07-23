@@ -76,6 +76,20 @@ export default function JudgmentPage({ params }) {
 
       <div className="judgment-header">
         <h1>{j.title}</h1>
+        {j.content_type && j.content_type !== 'JUDGMENT' && (
+          <div
+            style={{
+              background: '#eef2ff', border: '1px solid #c7d2fe', borderRadius: 3,
+              padding: '10px 14px', marginBottom: 14, fontSize: '0.85rem', color: '#3730a3',
+            }}
+          >
+            📌 <strong>Note:</strong> this is not a court judgment — it&apos;s a{' '}
+            {j.content_type === 'STATUTE' ? 'statute/ordinance' :
+             j.content_type === 'FORM' ? 'form/template' :
+             j.content_type === 'ARTICLE' ? 'informational article' : 'legal document'}.
+            See our <a href="/legal-texts">Statutes, Forms &amp; Legal Resources</a> section for more like this.
+          </div>
+        )}
         <div className="tag-row">
           {j.citation && <span className="tag">{j.citation}</span>}
           {j.court && j.court !== 'Not specified' && <span className="tag outline">{j.court}</span>}
