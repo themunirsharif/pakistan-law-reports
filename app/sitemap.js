@@ -1,4 +1,4 @@
-import { getAllSlugs, getAllCourts, courtToSlug } from '../lib/data';
+import { getAllCourts, courtToSlug, getAllTopics, topicToSlug, getFullTextSlugs } from '../lib/data';
 
 export default function sitemap() {
   const base = 'https://pakistanlawreports.com';
@@ -15,11 +15,17 @@ export default function sitemap() {
     priority: 0.7,
   }));
 
-  const judgmentPages = getAllSlugs().map((slug) => ({
+  const topicPages = getAllTopics().map((t) => ({
+    url: `${base}/topics/${topicToSlug(t)}`,
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  }));
+
+  const judgmentPages = getFullTextSlugs().map((slug) => ({
     url: `${base}/judgments/${slug}`,
     changeFrequency: 'monthly',
     priority: 0.6,
   }));
 
-  return [...staticPages, ...courtPages, ...judgmentPages];
+  return [...staticPages, ...courtPages, ...topicPages, ...judgmentPages];
 }
