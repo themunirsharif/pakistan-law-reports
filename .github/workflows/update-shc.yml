@@ -33,5 +33,21 @@ jobs:
           git config user.name "PLR Auto-Update Bot"
           git config user.email "actions@github.com"
           git add data/
-          git diff --cached --quiet && echo "No changes to commit." || git commit -m "Auto-update: new SHC judgments $(date +'%Y-%m-%d')"
-          git push
+          git diff --cached --quiet && echo "No changes to commit." && exit 0
+
+          git commit -m "Auto-update: new SHC judgments $(date +'%Y-%m-%d')"
+
+          # If someone else pushed to the repo while this was running (e.g.
+          # a manual file upload), pull their changes in and retry instead
+          # of failing outright.
+          for i in 1 2 3; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $i) - pulling latest changes and retrying..."
+            git pull --rebase --strategy-option=ours
+            sleep 5
+          done
+
+          echo "Failed to push after 3 attempts."
+          exit 1
